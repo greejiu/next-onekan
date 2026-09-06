@@ -72,8 +72,8 @@ assert.match(feedback, /soundEffectsToggle/, "설정 페이지의 효과음 토�
 assert.match(uw, /playCheckSound/, "unified-workspace.js의 할일 체크 지점(오늘 할일 목록 등)에 효과음이 연결되어야 합니다.");
 assert.match(app, /playCheckSound/, "app.js의 타임블록 체크 지점(renderTimeGrid)에 효과음이 연결되어야 합니다.");
 
-// tracking-stats.js는 이제 focusTaskCard를 대상으로 통계 패널을 붙여야 한다.
-assert.match(tracking, /getElementById\("focusTaskCard"\)/, "시간 통계 패널이 새 지금 집중 카드를 대상으로 해야 합니다.");
+// 홈 시간 통계는 제거하되 옛 메모 카드 참조도 되살아나면 안 된다.
+assert.doesNotMatch(tracking, /getElementById\("focusTaskCard"\)/, "지금 집중 카드에 시간 통계를 다시 붙이면 안 됩니다.");
 assert.doesNotMatch(tracking, /homeMemoCard/, "시간 통계 모듈에 옛 메모 카드 참조가 남아있으면 안 됩니다.");
 
 console.log("focus task card regression: ok");

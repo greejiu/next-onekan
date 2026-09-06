@@ -24,7 +24,6 @@ const ITEM_COLORS = [
 ];
 
 const viewState = {
-  home: { group: "project", period: "today" },
   tracking: { group: "project", period: "today" },
   reports: { group: "project", period: "week" },
 };
@@ -302,20 +301,6 @@ function rowsMarkup(rows, total, limit = Infinity) {
   }).join("");
 }
 
-function ensureHomePanel() {
-  const card = document.getElementById("focusTaskCard");
-  if (!card) return null;
-  card.classList.add("uw-home-stats-ready");
-  let panel = card.querySelector(".uw-home-mini-stats");
-  if (!panel) {
-    panel = document.createElement("aside");
-    panel.className = "uw-home-mini-stats";
-    panel.setAttribute("aria-label", "오늘 시간 통계");
-    card.appendChild(panel);
-  }
-  return panel;
-}
-
 function ensureTrackingPanel() {
   const page = document.getElementById("page-tracking");
   const timerPanel = page?.querySelector(".timer-panel");
@@ -329,21 +314,6 @@ function ensureTrackingPanel() {
   if (gap) page.insertBefore(card, gap);
   else timerPanel.insertAdjacentElement("afterend", card);
   return card;
-}
-
-function renderHome(raw) {
-  const panel = ensureHomePanel();
-  if (!panel) return;
-  const { group, period } = viewState.home;
-  const stats = aggregate(raw, group, period);
-  panel.innerHTML = `
-    <div class="uw-stats-head">
-      <span class="uw-stats-title">오늘 시간 통계</span>
-      <span class="uw-stats-total">총 ${esc(formatDuration(stats.total))}</span>
-    </div>
-    <div class="uw-stats-controls">${groupButtons("home")}</div>
-    <div class="uw-stats-list">${rowsMarkup(stats.rows, stats.total, 4)}</div>
-  `;
 }
 
 function renderTracking(raw) {
@@ -417,7 +387,6 @@ function renderReports(raw) {
 
 function renderAll(raw = latestRawState || {}) {
   latestRawState = raw || {};
-  renderHome(latestRawState);
   renderTracking(latestRawState);
   renderReports(latestRawState);
 }
@@ -475,7 +444,6 @@ document.addEventListener("visibilitychange", () => {
 supabase.auth.onAuthStateChange(() => queueRefresh(0));
 
 function init() {
-  ensureHomePanel();
   ensureTrackingPanel();
   renderReports({});
   queueRefresh(0);
