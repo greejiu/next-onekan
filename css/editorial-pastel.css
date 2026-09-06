@@ -1,0 +1,187 @@
+/* 오늘한칸 — editorial pastel home refresh (2026-09) */
+:root{
+  --bg:#f8fbff;
+  --panel:#fff;
+  --panel-soft:#f8f7fc;
+  --text:#29273a;
+  --muted:#7d788d;
+  --line:#ece9f4;
+  --line-strong:#ddd7ea;
+  --hover:#f6f3fc;
+  --accent:#8860d0;
+  --accent-dark:#6844ae;
+  --accent-soft:#f2edff;
+  --pastel-purple:#e8e0ff;
+  --pastel-pink:#fde6f0;
+  --pastel-blue:#e3f3ff;
+  --pastel-yellow:#fff3c9;
+  --pastel-green:#ddf6e8;
+  --shadow:0 8px 28px rgba(112,94,155,.075);
+  --radius:22px;
+  --sidebar:248px;
+}
+
+body{background:linear-gradient(135deg,#f9fbff 0%,#fcf9ff 48%,#f7fcfa 100%);color:var(--text)}
+.app,.main{background:transparent}
+.main{padding:30px 36px 100px}
+.page{max-width:1280px}
+#page-home{max-width:1440px}
+
+/* Left archival index */
+.sidebar{
+  padding:26px 18px 22px;
+  border-right:1px solid #e9e7f0;
+  background:rgba(255,255,255,.88);
+  box-shadow:5px 0 26px rgba(119,101,161,.055);
+  backdrop-filter:blur(22px);
+}
+.brand-row{height:auto;min-height:54px;padding:0 10px 20px;border-bottom:1px solid #f0edf5}
+.brand{color:#302c43;font-family:Georgia,"Noto Serif KR",serif;font-size:21px;font-weight:700;letter-spacing:-.035em}
+.brand::after{content:"ARCHIVAL JOURNAL";display:block;position:absolute;margin:35px 0 0 18px;color:#a09aab;font:700 9px/1.2 Pretendard,sans-serif;letter-spacing:.15em}
+.brand-dot{background:linear-gradient(135deg,#50b9ef,#8d78e8);box-shadow:0 0 0 4px #eef6ff}
+.collapse-btn{color:#918b9d;background:#faf9fc}
+.sidebar .nav{gap:5px;margin-top:25px}
+.sidebar .nav-item,.sidebar .nav-child,.nav-section-toggle{border-radius:13px}
+.sidebar .nav-item{min-height:42px;color:#746f81}
+.sidebar .nav-item:hover{background:#f8f6fc;color:#352f48;transform:translateX(2px)}
+.sidebar .nav-item.active{
+  color:#6744b3;
+  border:1px solid #e4dafb;
+  background:linear-gradient(90deg,#f1edff 0%,#f2f8ff 70%,rgba(255,255,255,.2) 100%);
+  box-shadow:0 3px 12px rgba(122,94,185,.08);
+}
+.nav-section-toggle{color:#a39dab}
+.sidebar-bottom{border-top-color:#f0edf5}
+.someday-quick-desktop{border-color:#eeeaf5!important;background:linear-gradient(145deg,#fff,#faf8ff)!important;box-shadow:0 5px 18px rgba(116,90,166,.06)!important}
+
+/* Editorial masthead */
+#page-home .page-head.home-dashboard{
+  min-height:250px;
+  padding:32px 36px;
+  border:1px solid rgba(255,255,255,.92);
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 13% 18%,rgba(186,224,255,.54),transparent 30%),
+    radial-gradient(circle at 53% 4%,rgba(224,211,255,.52),transparent 33%),
+    radial-gradient(circle at 94% 80%,rgba(202,241,222,.57),transparent 29%),
+    linear-gradient(120deg,#f5f9ff,#faf7ff 52%,#f4fcf8);
+  box-shadow:0 9px 34px rgba(135,151,190,.13);
+}
+#page-home .page-head.home-dashboard::after{opacity:.14;background-size:7px 7px}
+.home-dashboard-track{grid-template-columns:minmax(0,3fr) 1px minmax(270px,1.25fr);gap:32px;min-height:184px}
+.home-editorial-label{display:inline-flex;align-items:center;gap:6px;width:max-content;margin-bottom:11px;padding:5px 11px;border:1px solid #e7ddfb;border-radius:999px;background:rgba(255,255,255,.78);color:#7652bd;font-size:9px;font-weight:800;letter-spacing:.13em}
+.home-editorial-label span{color:#e99ab8}
+.home-editorial-title{margin:0 0 16px;color:#302d43;font-family:Georgia,"Noto Serif KR",serif;font-size:clamp(25px,3vw,38px);font-weight:600;line-height:1.25;letter-spacing:-.045em}
+.home-editorial-title em{color:#7d62c5;font-weight:400}
+.home-dashboard-kicker{margin-bottom:8px;color:#9791a2;font-size:9px;letter-spacing:.15em}
+.home-dashboard-today-main{gap:14px}
+.home-dashboard-completion{font-family:Georgia,"Noto Serif KR",serif;font-size:16px}
+#page-home .home-dashboard .home-progress{width:55px;height:55px;flex-basis:55px}
+#page-home .home-dashboard .home-progress svg{width:55px;height:55px}
+#page-home .home-dashboard .home-progress span{font-size:11px}
+.home-weather{margin-top:4px}
+.home-dashboard-dday{padding:18px;border:1px solid rgba(255,255,255,.9);border-radius:22px;background:rgba(255,255,255,.62);box-shadow:0 6px 22px rgba(121,108,157,.07);backdrop-filter:blur(12px)}
+.home-dday-hero strong{color:#7e56c8;font-family:Georgia,"Noto Serif KR",serif;font-size:39px}
+.home-dday-hero span{font-family:Georgia,"Noto Serif KR",serif;font-size:15px}
+.home-dday-chip{border-color:#ece5f7;background:rgba(255,255,255,.82)}
+
+/* Current focus + the real timer */
+.home-focus-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(340px,5fr);gap:22px;align-items:stretch;margin-bottom:22px}
+#page-home .home-focus-grid>.card{margin:0;border-radius:27px;background:rgba(255,255,255,.93);box-shadow:var(--shadow)}
+#page-home .home-focus-grid>.card:hover{border-color:#ddd5ee;box-shadow:0 13px 34px rgba(112,94,155,.12)}
+.card-title small{color:#928c9d;font-size:9px;font-weight:800;letter-spacing:.11em}
+.focus-task-card{min-height:430px;border-color:#e9e3f4}
+.focus-task-card>.card-header{padding:23px 24px 10px}
+.focus-task-card>.card-header .card-title{display:flex;align-items:center;gap:6px;font-size:13px;letter-spacing:.035em;text-transform:uppercase}
+.focus-task-card>.card-header .card-title::before{content:"";width:9px;height:9px;border-radius:50%;background:#61bdef;box-shadow:0 0 0 4px #e6f6ff}
+.focus-task-card>.card-header .card-title::after{content:"· CURRENT FOCUS";color:#928c9d;font-size:9px;font-weight:800;letter-spacing:.11em}
+.focus-task-body{padding:7px 24px 22px!important}
+.focus-task-active-title{font-family:Georgia,"Noto Serif KR",serif;font-size:22px}
+.focus-subtask-list{gap:8px;border:0;border-radius:0}
+.focus-subtask-row{min-height:46px;padding:9px 12px;border:1px solid #eeeaf5!important;border-radius:13px;background:#faf9fd}
+.focus-subtask-row.checked{background:#f8fbff}
+.focus-subtask-check{border-radius:6px}
+.focus-subtask-add-form input{border-radius:12px}
+
+.home-focus-timer{min-height:430px}
+.home-focus-timer>.card-header{align-items:center;padding:23px 24px 4px!important}
+.home-focus-timer>.card-header .card-title{font-size:13px;letter-spacing:.035em;text-transform:uppercase}
+.home-focus-timer .pomodoro-box{padding:4px 24px 24px}
+.home-focus-timer .timer-mode-toggle{margin:7px auto 10px}
+.home-focus-timer .pomodoro-status{margin-bottom:8px;font-size:11px}
+.home-focus-timer .pomodoro-circle{width:180px;margin-bottom:13px;background:conic-gradient(#8b68df var(--timer-progress),#f0edf6 0);box-shadow:0 9px 25px rgba(116,86,179,.12)}
+.home-focus-timer .pomodoro-circle::before{inset:6px;background:#fff}
+.home-focus-timer .pomodoro-circle .timer-clock{font-family:Georgia,"Noto Serif KR",serif;font-size:42px;font-weight:600}
+.home-focus-timer .timer-minute-controls{gap:5px;margin-top:10px}
+.home-focus-timer .timer-minute-controls .soft-btn{min-width:51px;min-height:28px;padding:4px 8px;font-size:10px}
+.home-focus-timer .timer-select{display:grid;grid-template-columns:1fr;gap:5px;width:100%;margin-bottom:7px}
+.home-focus-timer .timer-select label{display:none}
+.home-focus-timer .timer-select select,.home-focus-timer .timer-select input{height:34px;border-radius:10px;font-size:11px}
+.home-focus-timer .timer-task{min-height:16px;font-size:10px}
+.home-focus-timer .timer-controls{gap:7px;margin-top:7px}
+.home-focus-timer .timer-controls button{min-height:36px;font-size:11px}
+.home-focus-timer .timer-start-wide{background:linear-gradient(90deg,#8660d2,#9d75e5 55%,#e68eb7);border:0;box-shadow:0 5px 15px rgba(135,91,204,.2)}
+
+/* Planner cards */
+.uw-overdue-banner{border-radius:15px!important}
+.home-columns.home-columns-3.uw-home-layout{grid-template-columns:minmax(0,1.22fr) minmax(330px,.78fr)!important;gap:22px!important}
+.home-column{gap:18px}
+.uw-home-view-controls{top:10px;margin-bottom:10px;padding:9px 11px;border-color:#eae6f1;border-radius:15px;background:rgba(255,255,255,.9);box-shadow:0 5px 18px rgba(112,94,155,.07)}
+#page-home .home-timeline-card,#page-home .uw-side-toggle{border-radius:24px;background:rgba(255,255,255,.94)}
+#page-home .home-timeline-card>.card-header .card-title::before{content:"●";margin-right:7px;color:#ffae84;font-size:10px}
+#page-home .uw-upcoming-card>.card-header .card-title::before{content:"●";margin-right:7px;color:#7cbcf0;font-size:10px}
+#page-home .uw-someday-card>.card-header .card-title::before{content:"●";margin-right:7px;color:#78c99d;font-size:10px}
+.uw-home-view-controls button{border-radius:10px!important}
+
+/* Tracking now focuses on records; timer lives on Home. */
+#page-tracking .timer-panel{grid-template-columns:1fr}
+
+@media(max-width:1050px){
+  .home-focus-grid{grid-template-columns:1fr}
+  .focus-task-card,.home-focus-timer{min-height:0}
+  .home-focus-timer .pomodoro-circle{width:200px}
+  .home-columns.home-columns-3.uw-home-layout{grid-template-columns:1fr!important}
+}
+
+@media(max-width:900px){
+  :root{--sidebar:220px}
+  .app{padding-top:58px;padding-bottom:78px}
+  .main{padding:16px 12px 38px}
+  .mobile-topbar{height:58px;padding:8px 18px;border-bottom:1px solid #eeeaf5!important;background:rgba(255,255,255,.91)!important;box-shadow:0 3px 18px rgba(112,94,155,.05)}
+  .mobile-topbar strong{color:#352d4a;font-family:Georgia,"Noto Serif KR",serif;font-size:18px}
+  .mobile-topbar strong::before{content:"✦";margin-right:7px;color:#8a63db;font:700 13px Pretendard,sans-serif}
+  .sidebar,.app.sidebar-collapsed .sidebar{height:calc(70px + env(safe-area-inset-bottom));padding:7px 5px calc(7px + env(safe-area-inset-bottom));border-top:1px solid #ebe7f2;background:rgba(255,255,255,.93);box-shadow:0 -5px 22px rgba(108,86,155,.09);backdrop-filter:blur(20px)}
+  .sidebar .nav-item,.app.sidebar-collapsed .sidebar .nav-item{border:0;background:transparent;box-shadow:none;transform:none}
+  .sidebar .nav-item.active{color:#774cc4}
+  .sidebar .nav-item.active::after{content:"";position:absolute;bottom:1px;width:17px;height:3px;border-radius:99px;background:#8a63db}
+  .nav-item{position:relative}
+  .nav-section-toggle{display:none}
+  .nav-section-items{display:flex!important;gap:1px}
+  #page-home .page-head.home-dashboard{min-height:0;margin-bottom:16px;padding:0;overflow:hidden;border-radius:24px}
+  .home-dashboard-track{display:flex;min-height:328px}
+  .home-dashboard-today,.home-dashboard-dday{padding:24px 20px 47px}
+  .home-editorial-title{font-size:29px}
+  .home-dashboard-dday{margin:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+  .home-focus-grid{gap:16px;margin-bottom:16px}
+  #page-home .home-focus-grid>.card{border-radius:22px}
+  .focus-task-card>.card-header,.home-focus-timer>.card-header{padding:19px 18px 7px!important}
+  .focus-task-body{padding:6px 18px 18px!important}
+  .focus-task-active-title{font-size:19px}
+  .home-focus-timer .pomodoro-box{padding:2px 18px 19px}
+  .home-focus-timer .pomodoro-circle{width:172px}
+  .home-focus-timer .timer-select{max-width:340px}
+  .uw-home-view-controls{position:relative;top:auto}
+}
+
+@media(max-width:480px){
+  .home-editorial-title{font-size:27px}
+  .home-editorial-label{font-size:8px}
+  .home-dashboard-today-main{align-items:center}
+  .home-dashboard-completion{font-size:14px}
+  .home-focus-timer .timer-controls{display:grid;grid-template-columns:1fr 1fr}
+  .home-focus-timer .timer-start-wide{grid-column:1/-1}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .sidebar .nav-item,#page-home .card{transition:none!important}
+}

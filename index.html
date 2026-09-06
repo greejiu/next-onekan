@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./css/google-calendar.css?v=1" />
   <link rel="stylesheet" href="./css/sidebar-navigation.css?v=1" />
   <link rel="stylesheet" href="./css/someday-quick-add.css?v=1" />
+  <link rel="stylesheet" href="./css/editorial-pastel.css?v=1" />
 </head>
 <body>
   <section id="auth-section" class="auth-shell">
@@ -118,7 +119,9 @@
         <div class="page-head home-dashboard" aria-label="오늘 대시보드">
           <div class="home-dashboard-track" id="homeDashboardTrack">
             <section class="home-dashboard-today" aria-labelledby="homeTodayLabel" data-home-dashboard-slide="today">
-              <div class="home-dashboard-kicker" id="homeTodayLabel">TODAY</div>
+              <div class="home-editorial-label"><span aria-hidden="true">✦</span> DAILY EDITORIAL</div>
+              <h1 class="home-editorial-title">오늘도 한 칸씩,<br><em>맑게 채워가요</em></h1>
+              <div class="home-dashboard-kicker" id="homeTodayLabel">TODAY · 오늘의 밀도</div>
               <div class="home-dashboard-today-main">
                 <div class="home-progress" id="homeProgress" aria-label="오늘 할일 진행률"><svg viewBox="0 0 72 72" aria-hidden="true"><circle class="home-progress-track" cx="36" cy="36" r="29"></circle><circle class="home-progress-value" cx="36" cy="36" r="29"></circle></svg><span id="homeProgressLabel">0%</span></div>
                 <div class="home-dashboard-copy">
@@ -149,12 +152,35 @@
           </div>
         </div>
 
-        <article class="card focus-task-card" id="focusTaskCard">
-          <div class="card-header">
-            <div class="card-title" id="focusTaskCardTitle">지금 할 일</div>
-          </div>
-          <div class="card-body focus-task-body" id="focusTaskBody"></div>
-        </article>
+        <div class="home-focus-grid">
+          <article class="card focus-task-card" id="focusTaskCard">
+            <div class="card-header">
+              <div class="card-title" id="focusTaskCardTitle">지금 할 일</div>
+            </div>
+            <div class="card-body focus-task-body" id="focusTaskBody"></div>
+          </article>
+
+          <article class="card home-focus-timer">
+            <div class="card-header"><div class="card-title">포커스 모드 <small>· FOCUS DIAL</small></div><div class="card-meta" id="trackingTodayTotal">오늘 0분</div></div>
+            <div class="timer-box pomodoro-box">
+              <div class="seg timer-mode-toggle" id="timerModeToggle" aria-label="타이머 방식">
+                <button data-timer-mode="stopwatch" type="button">스톱워치</button>
+                <button class="active" data-timer-mode="pomodoro" type="button">뽀모도로</button>
+              </div>
+              <div class="pomodoro-status" id="timerStatus">집중 준비</div>
+              <div class="pomodoro-circle" id="timerCircle">
+                <div class="timer-clock" id="timerClock">25:00</div>
+                <div class="timer-minute-controls" aria-label="집중 시간 조절">
+                  <button class="soft-btn" id="timerMinusMinute" type="button">−1분</button>
+                  <button class="soft-btn" id="timerPlusMinute" type="button">+1분</button>
+                </div>
+              </div>
+              <div class="field timer-select"><label>기록할 내용</label><select id="timerTaskSelect"></select><input id="timerCustomTitle" type="text" maxlength="80" placeholder="또는 직접 기록 이름 입력" autocomplete="off" /></div>
+              <div class="timer-task" id="timerTaskLabel">할일을 고르고 시작하세요.</div>
+              <div class="timer-controls"><button class="primary-btn timer-start-wide" id="timerStart" type="button">집중 시작</button><button class="soft-btn" id="timerPause" type="button" disabled>일시정지</button><button class="soft-btn" id="timerStop" type="button" disabled>종료</button></div>
+            </div>
+          </article>
+        </div>
 
         <section class="uw-overdue-banner" id="overdueTaskBanner" hidden aria-live="polite"></section>
 
@@ -255,26 +281,6 @@
       <section class="page" id="page-tracking">
         <div class="page-head"><div><h1 class="page-title">시간추적</h1></div></div>
         <div class="timer-panel">
-          <article class="card">
-            <div class="card-header"><div class="card-title">시간 측정</div><div class="card-meta" id="trackingTodayTotal">오늘 0분</div></div>
-            <div class="timer-box pomodoro-box">
-              <div class="seg timer-mode-toggle" id="timerModeToggle" aria-label="타이머 방식">
-                <button data-timer-mode="stopwatch" type="button">스톱워치</button>
-                <button class="active" data-timer-mode="pomodoro" type="button">뽀모도로</button>
-              </div>
-              <div class="pomodoro-status" id="timerStatus">집중 준비</div>
-              <div class="pomodoro-circle" id="timerCircle">
-                <div class="timer-clock" id="timerClock">25:00</div>
-                <div class="timer-minute-controls" aria-label="집중 시간 조절">
-                  <button class="soft-btn" id="timerMinusMinute" type="button">−1분</button>
-                  <button class="soft-btn" id="timerPlusMinute" type="button">+1분</button>
-                </div>
-              </div>
-              <div class="field timer-select"><label>기록할 내용</label><select id="timerTaskSelect"></select><input id="timerCustomTitle" type="text" maxlength="80" placeholder="또는 직접 기록 이름 입력" autocomplete="off" /></div>
-              <div class="timer-task" id="timerTaskLabel">할일을 고르고 시작하세요.</div>
-              <div class="timer-controls"><button class="primary-btn timer-start-wide" id="timerStart" type="button">집중 시작</button><button class="soft-btn" id="timerPause" type="button" disabled>일시정지</button><button class="soft-btn" id="timerStop" type="button" disabled>종료</button></div>
-            </div>
-          </article>
           <article class="card"><div class="card-header"><div class="card-title">오늘 기록</div><button class="uw-icon-btn session-add-btn" data-add-session data-default-offset="0" type="button" aria-label="오늘 시간 기록 추가">＋</button></div><div class="card-body" id="todaySessions"></div></article>
         </div>
         <div class="section-gap"></div>
