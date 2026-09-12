@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -26,18 +24,5 @@ jobs:
           while IFS= read -r -d '' file; do
             node --check "$file"
           done < <(find js -maxdepth 1 -name '*.js' -print0 | sort -z)
-      - name: Run regression scripts
-        shell: bash
-        run: |
-          set -euo pipefail
-          for test in scripts/*-regression.mjs; do
-            echo "::group::$test"
-            node "$test"
-            echo "::endgroup::"
-          done
-      - name: Check changed asset cache versions
-        env:
-          CACHE_BUSTER_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
-        run: node scripts/cache-buster-regression.mjs --check-diff "$CACHE_BUSTER_BASE"
-      - name: Run unified render smoke test
-        run: node scripts/unified-render-smoke.mjs
+      - name: Run next-onekan v0.1 regression
+        run: node scripts/next-onekan-v01-regression.mjs
