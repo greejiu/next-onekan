@@ -1,0 +1,131 @@
+/* 다음 한칸 v0.1 — 실제 Auth/CRUD 및 구조 탐색 보강 */
+
+[hidden] { display: none !important; }
+
+.nk-auth-gate {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg);
+}
+.nk-auth-card {
+  width: min(430px, 100%);
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+.nk-auth-brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 800; }
+.nk-auth-copy { color: var(--muted); font-size: 13px; line-height: 1.65; margin: 14px 0 22px; }
+.nk-auth-form { display: grid; gap: 12px; }
+.nk-field { display: grid; gap: 7px; }
+.nk-field > span { color: var(--muted); font-size: 11px; font-weight: 700; }
+.nk-field input,
+.nk-field textarea,
+.nk-field select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+  padding: 12px 13px;
+  outline: none;
+  color: var(--text);
+}
+.nk-field textarea { min-height: 96px; resize: vertical; }
+.nk-field input:focus,
+.nk-field textarea:focus,
+.nk-field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.nk-auth-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+.nk-auth-message { min-height: 20px; margin: 12px 0 0; color: var(--danger); font-size: 12px; line-height: 1.5; }
+
+.nk-account-box { display: grid; gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
+.nk-account-email { overflow: hidden; text-overflow: ellipsis; color: var(--muted); font-size: 11px; }
+.nk-text-btn { border: 0; background: transparent; padding: 0; color: var(--muted); font-size: 11px; text-align: left; cursor: pointer; }
+.nk-text-btn:hover { color: var(--text); }
+.nk-sync-status { font-size: 11px; color: var(--muted); }
+.nk-sync-status.error { color: var(--danger); }
+
+.nk-toolbar-spacer { flex: 1; }
+.nk-segmented { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+.nk-segmented button { border: 0; background: transparent; border-radius: 9px; padding: 7px 10px; color: var(--muted); cursor: pointer; font-size: 12px; }
+.nk-segmented button.active { background: var(--text); color: white; }
+.nk-tree-controls { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
+
+.nk-tree-node { position: relative; }
+.nk-tree-toggle {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 12px;
+}
+.nk-tree-toggle:hover { background: #ebe8e0; color: var(--text); }
+.nk-tree-toggle.placeholder { cursor: default; opacity: .25; }
+.nk-tree-node.reverse .nk-tree-meta::before { content: "↑ "; }
+.nk-empty {
+  border: 1px dashed var(--line);
+  border-radius: 16px;
+  padding: 26px 18px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.nk-now-empty { display: grid; gap: 14px; align-content: center; min-height: 220px; position: relative; z-index: 1; }
+.nk-now-empty h2 { margin: 0; font-size: 26px; letter-spacing: -.04em; }
+.nk-now-empty p { margin: 0; color: var(--muted); line-height: 1.6; font-size: 13px; }
+.nk-now-reason { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.nk-now-reason summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+.nk-why-chain { margin-top: 10px; display: grid; gap: 5px; color: var(--muted); font-size: 12px; }
+
+.nk-next-item { grid-template-columns: 28px minmax(0,1fr) auto; align-items: center; }
+.nk-next-main { min-width: 0; cursor: pointer; }
+.nk-check-btn {
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid #b8b7b0;
+  border-radius: 7px;
+  background: white;
+  cursor: pointer;
+}
+.nk-next-actions { display: flex; gap: 5px; }
+.nk-mini-btn { border: 1px solid var(--line); background: #f7f4ee; border-radius: 9px; padding: 6px 8px; color: var(--muted); cursor: pointer; font-size: 10px; white-space: nowrap; }
+.nk-mini-btn:hover, .nk-mini-btn.active { background: var(--accent-soft); color: var(--accent-strong); border-color: #d3ddcf; }
+
+.nk-detail-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+.nk-danger-btn { border: 1px solid #ead0cc; background: #fff7f5; color: var(--danger); border-radius: 12px; padding: 9px 12px; cursor: pointer; }
+.nk-detail-status { display: inline-flex; border-radius: 999px; background: #f2efe8; padding: 6px 9px; color: var(--muted); font-size: 10px; font-weight: 700; }
+
+.nk-form-grid { display: grid; gap: 13px; margin: 18px 0; }
+.nk-form-grid.two { grid-template-columns: 1fr 1fr; }
+.nk-form-hint { color: var(--muted); font-size: 11px; line-height: 1.55; }
+.nk-inline-message { margin: 8px 0 0; color: var(--danger); font-size: 11px; min-height: 16px; }
+
+.nk-break-add { width: 100%; border: 1px dashed var(--line); background: transparent; border-radius: 12px; padding: 10px; color: var(--muted); cursor: pointer; }
+.nk-break-add:hover { background: #f6f3ed; }
+
+.nk-archive-card { cursor: pointer; }
+.nk-archive-card:hover { transform: translateY(-1px); border-color: #d7d1c6; }
+
+.nk-settings-account { margin-top: 14px; display: flex; gap: 10px; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--line); }
+
+@media (max-width: 720px) {
+  .nk-auth-card { padding: 22px; }
+  .nk-structure-toolbar { align-items: stretch; }
+  .nk-toolbar-spacer { display: none; }
+  .nk-tree-controls { width: 100%; justify-content: space-between; }
+  .nk-segmented { flex: 1; }
+  .nk-segmented button { flex: 1; }
+  .nk-form-grid.two { grid-template-columns: 1fr; }
+  .nk-next-item { grid-template-columns: 26px minmax(0,1fr); }
+  .nk-next-actions { grid-column: 2; }
+}

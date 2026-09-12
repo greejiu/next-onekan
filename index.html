@@ -7,9 +7,26 @@
   <title>다음 한칸</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
   <link rel="stylesheet" href="./css/next-onekan-v01.css?v=1" />
+  <link rel="stylesheet" href="./css/next-onekan-data.css?v=1" />
 </head>
 <body>
-  <div class="nk-app">
+  <section class="nk-auth-gate" id="authGate">
+    <div class="nk-auth-card">
+      <div class="nk-auth-brand"><span class="nk-brand-mark">→</span><span>다음 한칸</span></div>
+      <p class="nk-auth-copy">기존 오늘한칸과 같은 계정으로 로그인할 수 있어요. 이전 데이터는 건드리지 않고, 다음 한칸의 새 구조만 따로 저장합니다.</p>
+      <form class="nk-auth-form" id="authForm">
+        <label class="nk-field"><span>이메일</span><input id="authEmail" type="email" autocomplete="email" placeholder="email@example.com" required /></label>
+        <label class="nk-field"><span>비밀번호</span><input id="authPassword" type="password" autocomplete="current-password" placeholder="6자 이상" required /></label>
+        <div class="nk-auth-actions">
+          <button class="nk-primary-btn" id="loginButton" type="submit">로그인</button>
+          <button class="nk-soft-btn" id="signupButton" type="button">회원가입</button>
+        </div>
+      </form>
+      <p class="nk-auth-message" id="authMessage" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <div class="nk-app" id="appShell" hidden>
     <aside class="nk-sidebar" aria-label="주요 메뉴">
       <div class="nk-brand"><span class="nk-brand-mark">→</span><span>다음 한칸</span></div>
       <p class="nk-tagline">큰 방향을<br />움직일 수 있는 한 칸까지.</p>
@@ -22,7 +39,12 @@
       </nav>
 
       <div class="nk-sidebar-foot">
-        <b>v0.1 화면 구조</b><br />정체성 → 목표 → 프로젝트 → 작업 → 다음 한칸
+        <b>v0.1</b><br />정체성 → 목표 → 프로젝트 → 작업 → 다음 한칸
+      </div>
+      <div class="nk-account-box">
+        <span class="nk-sync-status" id="syncStatus">저장됨</span>
+        <span class="nk-account-email" id="accountEmail"></span>
+        <button class="nk-text-btn" data-logout type="button">로그아웃</button>
       </div>
     </aside>
 
@@ -30,7 +52,7 @@
       <header class="nk-topbar">
         <span class="nk-top-title" id="topTitle">홈</span>
         <div class="nk-top-actions">
-          <button class="nk-soft-btn" type="button">검색</button>
+          <span class="nk-sync-status" id="mobileSyncStatus">저장됨</span>
           <button class="nk-primary-btn" id="topAdd" type="button">＋ 만들기</button>
         </div>
       </header>
@@ -45,22 +67,12 @@
         </div>
 
         <div class="nk-home-grid">
-          <article class="nk-card nk-now-card">
-            <div>
-              <div class="nk-now-meta">포트폴리오 웹사이트 › 메인 페이지 디자인</div>
-              <h2 class="nk-now-title">레퍼런스 사이트<br />3개 저장하기</h2>
-              <div class="nk-path">다음 행동이 충분히 작으면, 시작이 쉬워져요.</div>
-            </div>
-            <div class="nk-now-actions">
-              <span class="nk-estimate">◷ 약 10분</span>
-              <button class="nk-primary-btn" id="startNow" type="button">시작하기</button>
-            </div>
-          </article>
+          <article class="nk-card nk-now-card" id="nowCard"></article>
 
           <article class="nk-card nk-list-card">
             <div class="nk-card-head">
               <h2>다음에 할 수 있는 것</h2>
-              <span class="nk-count" id="nextCount">3개</span>
+              <span class="nk-count" id="nextCount">0개</span>
             </div>
             <div class="nk-next-list" id="nextList"></div>
           </article>
@@ -82,16 +94,24 @@
           <button class="nk-primary-btn" id="structureAdd" type="button">＋ 새로 만들기</button>
         </div>
 
-        <div class="nk-structure-toolbar" aria-label="구조 필터">
+        <div class="nk-structure-toolbar" aria-label="구조 보기 도구">
           <button class="nk-filter-btn active" data-filter="all" type="button">전체</button>
           <button class="nk-filter-btn" data-filter="identity" type="button">🌱 정체성</button>
           <button class="nk-filter-btn" data-filter="goal" type="button">🎯 목표</button>
           <button class="nk-filter-btn" data-filter="project" type="button">📁 프로젝트</button>
+          <span class="nk-toolbar-spacer"></span>
+          <div class="nk-tree-controls">
+            <div class="nk-segmented" aria-label="구조 방향">
+              <button class="active" data-direction="forward" type="button">방향 → 행동</button>
+              <button data-direction="reverse" type="button">행동 → 방향</button>
+            </div>
+            <button class="nk-soft-btn" id="toggleAllTree" type="button">모두 펼치기</button>
+          </div>
         </div>
 
         <div class="nk-structure-layout">
           <section class="nk-card nk-tree-panel">
-            <div class="nk-card-head"><h2>구조</h2><span class="nk-count">탭해서 상세 보기</span></div>
+            <div class="nk-card-head"><h2 id="treeTitle">구조</h2><span class="nk-count">단계별로 펼쳐보기</span></div>
             <div class="nk-tree" id="structureTree"></div>
           </section>
 
@@ -119,17 +139,18 @@
           </div>
         </div>
         <section class="nk-card nk-settings-card">
-          <div class="nk-setting-row"><div><b>다음 한칸 기본 보기</b><small>홈에서 실행 가능한 행동을 우선 표시</small></div><span>켜짐</span></div>
-          <div class="nk-setting-row"><div><b>완료 항목</b><small>완료 즉시 보관함으로 이동</small></div><span>자동</span></div>
-          <div class="nk-setting-row"><div><b>기존 오늘한칸 데이터</b><small>별도 Supabase 데이터는 그대로 보존</small></div><span>보존 중</span></div>
+          <div class="nk-setting-row"><div><b>구조 보기 상태</b><small>방향/역방향과 펼침 상태는 이 브라우저에 기억됩니다.</small></div><span>로컬 저장</span></div>
+          <div class="nk-setting-row"><div><b>완료 항목</b><small>완료·보관·중단 항목은 보관함에서 확인합니다.</small></div><span>보존</span></div>
+          <div class="nk-setting-row"><div><b>기존 오늘한칸 데이터</b><small>기존 Supabase 데이터는 수정하지 않습니다.</small></div><span>보존 중</span></div>
+          <div class="nk-settings-account"><span id="settingsAccountEmail"></span><button class="nk-soft-btn" data-logout type="button">로그아웃</button></div>
         </section>
       </section>
     </main>
   </div>
 
-  <button class="nk-fab" id="fab" type="button" aria-label="새 항목 만들기">＋</button>
+  <button class="nk-fab" id="fab" type="button" aria-label="새 항목 만들기" hidden>＋</button>
 
-  <nav class="nk-mobile-nav" aria-label="모바일 주요 메뉴">
+  <nav class="nk-mobile-nav" id="mobileNav" aria-label="모바일 주요 메뉴" hidden>
     <button class="active" data-nav-page="home" type="button"><span>⌂</span>홈</button>
     <button data-nav-page="structure" type="button"><span>⌘</span>구조</button>
     <button data-nav-page="archive" type="button"><span>▣</span>보관함</button>
@@ -144,12 +165,40 @@
       </div>
       <p class="nk-break-copy">급하게 생각난 행동은 바로 ‘다음 한칸’으로 만들고, 중요한 일만 위쪽 구조에 연결해요.</p>
       <div class="nk-add-grid">
-        <button class="nk-add-option" type="button"><span>→</span><b>다음 한칸</b><small>지금 바로 실행할 행동</small></button>
-        <button class="nk-add-option" type="button"><span>□</span><b>작업</b><small>프로젝트를 구성하는 일</small></button>
-        <button class="nk-add-option" type="button"><span>📁</span><b>프로젝트</b><small>완성해야 할 결과물</small></button>
-        <button class="nk-add-option" type="button"><span>🎯</span><b>목표</b><small>도달하고 싶은 결과</small></button>
-        <button class="nk-add-option" type="button"><span>🌱</span><b>정체성</b><small>내가 향하고 싶은 방향</small></button>
+        <button class="nk-add-option" data-create-type="next_step" type="button"><span>→</span><b>다음 한칸</b><small>지금 바로 실행할 행동</small></button>
+        <button class="nk-add-option" data-create-type="task" type="button"><span>□</span><b>작업</b><small>프로젝트를 구성하는 일</small></button>
+        <button class="nk-add-option" data-create-type="project" type="button"><span>📁</span><b>프로젝트</b><small>완성해야 할 결과물</small></button>
+        <button class="nk-add-option" data-create-type="goal" type="button"><span>🎯</span><b>목표</b><small>도달하고 싶은 결과</small></button>
+        <button class="nk-add-option" data-create-type="identity" type="button"><span>🌱</span><b>정체성</b><small>내가 향하고 싶은 방향</small></button>
       </div>
+    </section>
+  </div>
+
+  <div class="nk-overlay" id="itemFormModal" hidden>
+    <section class="nk-modal" role="dialog" aria-modal="true" aria-labelledby="itemFormTitle">
+      <div class="nk-modal-head">
+        <div><span class="nk-kicker" id="itemFormKicker">CREATE</span><h2 id="itemFormTitle">새 항목 만들기</h2></div>
+        <button class="nk-close" type="button" data-close-overlay="itemFormModal" aria-label="닫기">×</button>
+      </div>
+      <form id="itemForm">
+        <input id="itemId" type="hidden" />
+        <input id="itemType" type="hidden" />
+        <div class="nk-form-grid">
+          <label class="nk-field"><span>제목</span><input id="itemTitle" type="text" maxlength="160" autocomplete="off" required /></label>
+          <label class="nk-field"><span>설명</span><textarea id="itemDescription" maxlength="2000" placeholder="필요한 경우에만 적어도 돼요."></textarea></label>
+          <label class="nk-field"><span>상위 연결</span><select id="itemParent"></select></label>
+          <div class="nk-form-grid two">
+            <label class="nk-field"><span>시작일</span><input id="itemStartDate" type="date" /></label>
+            <label class="nk-field"><span>기한</span><input id="itemDueDate" type="date" /></label>
+          </div>
+        </div>
+        <p class="nk-form-hint" id="itemFormHint"></p>
+        <p class="nk-inline-message" id="itemFormMessage" aria-live="polite"></p>
+        <div class="nk-modal-actions">
+          <button class="nk-soft-btn" type="button" data-close-overlay="itemFormModal">취소</button>
+          <button class="nk-primary-btn" id="saveItemButton" type="submit">저장</button>
+        </div>
+      </form>
     </section>
   </div>
 
@@ -159,21 +208,19 @@
         <div><span class="nk-kicker">BREAK DOWN</span><h2 id="breakdownTitle">작업 쪼개기</h2></div>
         <button class="nk-close" type="button" data-close-overlay="breakdownModal" aria-label="닫기">×</button>
       </div>
-      <p class="nk-break-copy"><b id="breakdownTaskTitle">프로젝트 소개 정리</b><br />이 일을 끝내려면 무엇을 해야 하나요?</p>
-      <div class="nk-break-inputs">
-        <input type="text" value="자료 모으기" aria-label="쪼갠 단계 1" />
-        <input type="text" value="소개 문장 작성하기" aria-label="쪼갠 단계 2" />
-        <input type="text" value="이미지 배치하기" aria-label="쪼갠 단계 3" />
-      </div>
-      <span class="nk-detail-label">이 중 지금 가장 먼저 할 수 있는 것은?</span>
+      <p class="nk-break-copy"><b id="breakdownTaskTitle"></b><br />이 일을 끝내려면 무엇을 해야 하나요?</p>
+      <div class="nk-break-inputs" id="breakdownInputs"></div>
+      <button class="nk-break-add" id="addBreakdownInput" type="button">＋ 단계 하나 더</button>
+      <span class="nk-detail-label" style="margin-top:18px">이 중 지금 가장 먼저 할 수 있는 것은?</span>
       <div class="nk-choice-list" id="breakdownChoices"></div>
+      <p class="nk-inline-message" id="breakdownMessage" aria-live="polite"></p>
       <div class="nk-modal-actions">
         <button class="nk-soft-btn" type="button" data-close-overlay="breakdownModal">취소</button>
-        <button class="nk-primary-btn" id="saveBreakdown" type="button">다음 한칸으로 지정</button>
+        <button class="nk-primary-btn" id="saveBreakdown" type="button">저장하고 지금 한칸 지정</button>
       </div>
     </section>
   </div>
 
-  <script src="./js/next-onekan-v01.js?v=1"></script>
+  <script type="module" src="./js/next-onekan-v01.js?v=2"></script>
 </body>
 </html>

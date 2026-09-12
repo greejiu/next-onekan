@@ -1,4 +1,4 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm";
 import { createOnekanStateStore } from "./state-store.js?v=1";
 
 const SUPABASE_URL = "https://mmpsyajgyufdxmmnxqba.supabase.co";
